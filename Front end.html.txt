@@ -1,0 +1,93 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Fitness Tracker</title>  
+</head>  
+<body>  
+    <h1>Fitness Tracker</h1>  
+    <div>  
+        <h2>Add Run</h2>  
+        <form id="run-form">  
+            <label for="distance">Distance (km):</label>  
+            <input type="number" id="distance" name="distance" required>  
+            <label for="pace">Pace (min/km):</label>  
+            <input type="number" id="pace" name="pace" required>  
+            <button type="submit">Submit</button>  
+        </form>  
+    </div>  
+    <div>  
+        <h2>Add Ride</h2>  
+        <form id="ride-form">  
+            <label for="ride-distance">Distance (km):</label>  
+            <input type="number" id="ride-distance" name="distance" required>  
+            <label for="average-speed">Average Speed (km/h):</label>  
+            <input type="number" id="average-speed" name="average_speed" required>  
+            <label for="climb">Cumulative Climb (m):</label>  
+            <input type="number" id="climb" name="climb" required>  
+            <label for="ride-calories">Calories Burned:</label>  
+            <input type="number" id="ride-calories" name="calories" required>  
+            <button type="submit">Submit</button>  
+        </form>  
+    </div>  
+    <div>  
+        <h2>Add Food</h2>  
+        <form id="food-form">  
+            <label for="food-calories">Calories:</label>  
+            <input type="number" id="food-calories" name="calories" required>  
+            <button type="submit">Submit</button>  
+        </form>  
+    </div>  
+
+    <script>  
+        document.getElementById('run-form').addEventListener('submit', async function(event) {  
+            event.preventDefault();  
+            const formData = new FormData(event.target);  
+            const data = {  
+                user_id: 1,  // Assume user_id is known or fetched  
+                distance: formData.get('distance'),  
+                pace: formData.get('pace')  
+            };  
+            const response = await fetch('/api/runs', {  
+                method: 'POST',  
+                headers: {  
+                    'Content-Type': 'application/json'  
+                },  
+                body: JSON.stringify(data)  
+            });  
+            const result = await response.json();  
+            alert(result.message);  
+        });  
+
+        document.getElementById('ride-form').addEventListener('submit', async function(event) {  
+            event.preventDefault();  
+            const formData = new FormData(event.target);  
+            const data = {  
+                user_id: 1,  // Assume user_id is known or fetched  
+                distance: formData.get('ride-distance'),  
+                average_speed: formData.get('average-speed'),  
+                climb: formData.get('climb'),  
+                calories: formData.get('ride-calories')  
+            };  
+            const response = await fetch('/api/rides', {  
+                method: 'POST',  
+                headers: {  
+                    'Content-Type': 'application/json'  
+                },  
+                body: JSON.stringify(data)  
+            });  
+            const result = await response.json();  
+            alert(result.message);  
+        });  
+
+        document.getElementById('food-form').addEventListener('submit', async function(event) {  
+            event.preventDefault();  
+            const formData = new FormData(event.target);  
+            const data = {  
+                user_id: 1,  // Assume user_id is known or fetched  
+                calories: formData.get('food-calories')  
+            };  
+            const response = await fetch('/api/foods', {  
+                method: 'POST',  
+                headers
